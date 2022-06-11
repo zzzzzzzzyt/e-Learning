@@ -7,19 +7,16 @@ import org.springframework.stereotype.Component;
 import java.util.Date;
 
 @Component
-public class MyMetaObjectHandler implements MetaObjectHandler
-{
+public class MyMetaObjectHandler implements MetaObjectHandler {
     @Override
-    public void insertFill(MetaObject metaObject)
-    {
-        this.setFieldValByName("gmtCreate",new Date(),metaObject);
-        this.setFieldValByName("gmtModified",new Date(),metaObject);
-        this.setFieldValByName("isDeleted",false,metaObject);
+    public void insertFill(MetaObject metaObject) {
+        this.setFieldValByName("gmtCreate", new Date(), metaObject);
+        this.setFieldValByName("gmtModified", new Date(), metaObject);
+        this.setFieldValByName("isDeleted", false, metaObject);
     }
 
     @Override
-    public void updateFill(MetaObject metaObject)
-    {
-        this.setFieldValByName("gmtModified",new Date(),metaObject);
+    public void updateFill(MetaObject metaObject) {
+        this.setFieldValByName("gmtModified", new Date(), metaObject);
     }
 }
