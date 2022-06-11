@@ -6,8 +6,7 @@ import lombok.Data;
 import java.math.BigDecimal;
 
 @Data
-public class CourseInfo
-{
+public class CourseInfo {
     @ApiModelProperty(value = "课程ID")
     private String id;
 

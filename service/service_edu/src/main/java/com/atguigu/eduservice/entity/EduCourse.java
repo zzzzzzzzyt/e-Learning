@@ -1,17 +1,15 @@
 package com.atguigu.eduservice.entity;
 
-import java.math.BigDecimal;
-
 import com.baomidou.mybatisplus.annotation.*;
-
-import java.util.Date;
-
-import java.io.Serializable;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
+
+import java.io.Serializable;
+import java.math.BigDecimal;
+import java.util.Date;
 
 /**
  * <p>
@@ -24,7 +22,7 @@ import lombok.experimental.Accessors;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-@ApiModel(value="EduCourse对象", description="课程")
+@ApiModel(value = "EduCourse对象", description = "课程")
 public class EduCourse implements Serializable {
 
     private static final long serialVersionUID = 1L;

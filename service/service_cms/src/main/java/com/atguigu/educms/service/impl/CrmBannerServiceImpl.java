@@ -22,10 +22,9 @@ import java.util.List;
 public class CrmBannerServiceImpl extends ServiceImpl<CrmBannerMapper, CrmBanner> implements CrmBannerService {
 
     //查询所有banner
-    @Cacheable(value = "banner",key = "'selectIndexList'")  //放在缓存中 redis 是以key-value进行存储的
+    @Cacheable(value = "banner", key = "'selectIndexList'")  //放在缓存中 redis 是以key-value进行存储的
     @Override
-    public List<CrmBanner> getAllBanner()
-    {
+    public List<CrmBanner> getAllBanner() {
         //根据id进行降序排列 选取前两条记录
         QueryWrapper<CrmBanner> wrapper = new QueryWrapper<>();
         wrapper.orderByDesc("id");

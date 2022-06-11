@@ -33,8 +33,7 @@ public class EduVideoController {
 
     //添加小节
     @PostMapping("addVideo")
-    public R addVideo(@RequestBody EduVideo eduVideo)
-    {
+    public R addVideo(@RequestBody EduVideo eduVideo) {
         videoService.save(eduVideo);
         return R.ok();
     }
@@ -42,17 +41,14 @@ public class EduVideoController {
     //删除小节
 
     @DeleteMapping("{id}")
-    public R deleteVideo(@PathVariable String id)
-    {
+    public R deleteVideo(@PathVariable String id) {
         EduVideo video = videoService.getById(id);
         String videoSourceId = video.getVideoSourceId();
         //这个需要一个视频的id 所以要先查出视频的id
-        if (!StringUtils.isEmpty(video))
-        {
+        if (!StringUtils.isEmpty(video)) {
             R result = vodClient.removeAlyVideo(videoSourceId);
-            if (result.getCode() == 20001)
-            {
-                throw new GuliException(20001,"删除视频失败,熔断器....");
+            if (result.getCode() == 20001) {
+                throw new GuliException(20001, "删除视频失败,熔断器....");
             }
         }
 
@@ -61,25 +57,21 @@ public class EduVideoController {
     }
 
 
-
     //要做到修改小节 有两步  第一步查出小节
     @GetMapping("getVideoInfo/{id}")
-    public R getVideo(@PathVariable String id)
-    {
+    public R getVideo(@PathVariable String id) {
         EduVideo eduVideo = videoService.getById(id);
-        return R.ok().data("eduVideo",eduVideo);
+        return R.ok().data("eduVideo", eduVideo);
     }
 
     //修改小节
     @PostMapping("updateVideo")
-    public R updateVideo(@RequestBody EduVideo eduVideo)
-    {
+    public R updateVideo(@RequestBody EduVideo eduVideo) {
         boolean flag = videoService.updateById(eduVideo);
-        if (flag)
-        {
+        if (flag) {
             return R.ok();
-        }else {
-            throw new GuliException(20001,"修改失败");
+        } else {
+            throw new GuliException(20001, "修改失败");
         }
     }
 

@@ -47,7 +47,7 @@ public class IndexServiceImpl implements IndexService {
         //根据用户id获取角色
         List<Role> roleList = roleService.selectRoleByUserId(user.getId());
         List<String> roleNameList = roleList.stream().map(item -> item.getRoleName()).collect(Collectors.toList());
-        if(roleNameList.size() == 0) {
+        if (roleNameList.size() == 0) {
             //前端框架必须返回一个角色，否则报错，如果没有角色，返回一个空角色
             roleNameList.add("");
         }
@@ -65,6 +65,7 @@ public class IndexServiceImpl implements IndexService {
 
     /**
      * 根据用户名获取动态菜单
+     *
      * @param username
      * @return
      */

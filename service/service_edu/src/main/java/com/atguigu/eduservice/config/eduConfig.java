@@ -9,8 +9,7 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 @MapperScan("com.atguigu.eduservice.mapper")
-public class eduConfig
-{
+public class eduConfig {
 
 
     //实现逻辑删除的插件

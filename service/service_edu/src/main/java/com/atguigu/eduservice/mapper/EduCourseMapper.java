@@ -4,7 +4,6 @@ import com.atguigu.eduservice.entity.EduCourse;
 import com.atguigu.eduservice.entity.frontvo.CourseWebVo;
 import com.atguigu.eduservice.entity.vo.CoursePublishVo;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import org.apache.ibatis.annotations.Mapper;
 
 /**
  * <p>
@@ -16,7 +15,7 @@ import org.apache.ibatis.annotations.Mapper;
  */
 
 public interface EduCourseMapper extends BaseMapper<EduCourse> {
-    public CoursePublishVo getCoursePublishInfo(String courseId);
+    CoursePublishVo getCoursePublishInfo(String courseId);
 
     CourseWebVo getBaseCourseInfo(String courseId);
 }

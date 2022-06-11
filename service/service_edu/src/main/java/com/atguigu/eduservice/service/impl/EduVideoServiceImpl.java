@@ -29,30 +29,27 @@ public class EduVideoServiceImpl extends ServiceImpl<EduVideoMapper, EduVideo> i
 
     //根据课程id删小节 删除对应的视频文件
     @Override
-    public void removeByCourseId(String courseId)
-    {
+    public void removeByCourseId(String courseId) {
         //先查出所有的视频id封装到进数组中
         QueryWrapper<EduVideo> videoWrapper = new QueryWrapper<>();
-        videoWrapper.eq("course_id",courseId);
+        videoWrapper.eq("course_id", courseId);
         videoWrapper.select("video_source_id");
         //此时应该是video_source_id的集合  querywrapper.select可以查询指定字段
         List<EduVideo> eduVideoList = baseMapper.selectList(videoWrapper);
         List<String> videoId = new ArrayList<>();
-        for (EduVideo eduVideo : eduVideoList)
-        {
+        for (EduVideo eduVideo : eduVideoList) {
             if (!StringUtils.isEmpty(eduVideo.getVideoSourceId()))
-            videoId.add(eduVideo.getVideoSourceId());
+                videoId.add(eduVideo.getVideoSourceId());
         }
 
-        if (videoId.size()>0)
-        {
+        if (videoId.size() > 0) {
             vodClient.deleteBatch(videoId);
         }
 
 
         //删除小节
         QueryWrapper<EduVideo> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("course_id",courseId);
+        queryWrapper.eq("course_id", courseId);
         baseMapper.delete(queryWrapper);
     }
 }

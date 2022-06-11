@@ -25,10 +25,9 @@ import java.util.Map;
 public class EduTeacherServiceImpl extends ServiceImpl<EduTeacherMapper, EduTeacher> implements EduTeacherService {
 
     //来查询前四个老师
-    @Cacheable(value = "teacher",key = "'selectIndexList'") //将数据存放在redis中了 所以查 没有的话 放入 有的话 直接拿出来 就不用查了
+    @Cacheable(value = "teacher", key = "'selectIndexList'") //将数据存放在redis中了 所以查 没有的话 放入 有的话 直接拿出来 就不用查了
     @Override
-    public List<EduTeacher> listIndex()
-    {
+    public List<EduTeacher> listIndex() {
         QueryWrapper<EduTeacher> queryWrapper = new QueryWrapper<>();
         queryWrapper.orderByDesc("id");
         queryWrapper.last("limit 4");
@@ -39,11 +38,10 @@ public class EduTeacherServiceImpl extends ServiceImpl<EduTeacherMapper, EduTeac
 
     //根据 前端分页显示教师数据
     @Override
-    public Map<String, Object> getTeacherFrontList(Page<EduTeacher> pageTeacher)
-    {
+    public Map<String, Object> getTeacherFrontList(Page<EduTeacher> pageTeacher) {
         QueryWrapper<EduTeacher> wrapper = new QueryWrapper<>();
         wrapper.orderByDesc("id");
-        baseMapper.selectPage(pageTeacher,wrapper);
+        baseMapper.selectPage(pageTeacher, wrapper);
 
         List<EduTeacher> records = pageTeacher.getRecords();
         long current = pageTeacher.getCurrent();

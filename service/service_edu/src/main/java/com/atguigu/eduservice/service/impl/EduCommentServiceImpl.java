@@ -7,7 +7,6 @@ import com.atguigu.eduservice.entity.EduComment;
 import com.atguigu.eduservice.mapper.EduCommentMapper;
 import com.atguigu.eduservice.service.EduCommentService;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,9 +35,8 @@ public class EduCommentServiceImpl extends ServiceImpl<EduCommentMapper, EduComm
 
     //分页查询所有的评论
     @Override
-    public Map<String, Object> getCommentPage(Page<EduComment> page, QueryWrapper<EduComment> wrapper)
-    {
-        baseMapper.selectPage(page,wrapper);
+    public Map<String, Object> getCommentPage(Page<EduComment> page, QueryWrapper<EduComment> wrapper) {
+        baseMapper.selectPage(page, wrapper);
         List<EduComment> commentList = page.getRecords();
 
         Map<String, Object> map = new HashMap<>();
@@ -56,11 +54,9 @@ public class EduCommentServiceImpl extends ServiceImpl<EduCommentMapper, EduComm
 
     //将评论存入数据库中
     @Override
-    public R saveComment(EduComment comment, HttpServletRequest request)
-    {
+    public R saveComment(EduComment comment, HttpServletRequest request) {
         String memberId = JwtUtils.getMemberIdByJwtToken(request);
-        if (StringUtils.isEmpty(memberId))
-        {
+        if (StringUtils.isEmpty(memberId)) {
             return R.error().message("请先登录");
         }
         comment.setMemberId(memberId);

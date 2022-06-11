@@ -34,66 +34,57 @@ public class EduCourseController {
     //课程列表 基本实现
     //TODO 完善条件查询带分页
     @PostMapping("pageCourseCondition/{current}/{limit}")
-    public R pageTeacherCondition(@PathVariable("current")Long current,
-                                  @PathVariable("limit")Long limit,
-                                  @RequestBody(required = false) CourseQuery courseQuery)
-    {
-        Page<EduCourse> coursePage = new Page<>(current,limit);
+    public R pageTeacherCondition(@PathVariable("current") Long current,
+                                  @PathVariable("limit") Long limit,
+                                  @RequestBody(required = false) CourseQuery courseQuery) {
+        Page<EduCourse> coursePage = new Page<>(current, limit);
         QueryWrapper<EduCourse> wrapper = new QueryWrapper<>();
         String title = courseQuery.getTitle();
         String status = courseQuery.getStatus();
         //多条件组合查询  判断是否存在 进行条件拼接
-        if (!StringUtils.isEmpty(title))
-        {
-            wrapper.like("title",title);
+        if (!StringUtils.isEmpty(title)) {
+            wrapper.like("title", title);
         }
-        if (!StringUtils.isEmpty(status))
-        {
-            wrapper.eq("status",status);
+        if (!StringUtils.isEmpty(status)) {
+            wrapper.eq("status", status);
         }
         //使得根据添加日期降序排序
         wrapper.orderByDesc("gmt_create");
 
-        eduCourseService.page(coursePage,wrapper);
+        eduCourseService.page(coursePage, wrapper);
         long total = coursePage.getTotal();
         List<EduCourse> records = coursePage.getRecords();
 
-        return R.ok().data("records",records).data("total",total);
+        return R.ok().data("records", records).data("total", total);
     }
-
 
 
     @PostMapping("addCourse")
-    public R addCourse(@RequestBody CourseInfo courseInfo)
-    {
-        String courseId  = eduCourseService.saveCourseInfo(courseInfo);
-        return R.ok().data("courseID",courseId);
+    public R addCourse(@RequestBody CourseInfo courseInfo) {
+        String courseId = eduCourseService.saveCourseInfo(courseInfo);
+        return R.ok().data("courseID", courseId);
     }
 
     @GetMapping("getCourseInfo/{courseId}")
-    public R getCourseInfo(@PathVariable String courseId)
-    {
+    public R getCourseInfo(@PathVariable String courseId) {
         CourseInfo courseInfo = eduCourseService.getCourseInfoById(courseId);
-        return R.ok().data("courseInfo",courseInfo);
+        return R.ok().data("courseInfo", courseInfo);
     }
 
     @PostMapping("updateCourseInfo")
-    public R updateCourseInfo(@RequestBody CourseInfo courseInfo)
-    {
+    public R updateCourseInfo(@RequestBody CourseInfo courseInfo) {
         eduCourseService.updateCourseInfo(courseInfo);
         return R.ok();
     }
 
     @GetMapping("getPublishCourseInfo/{id}")
-    public R getPublishCourseInfo(@PathVariable String id)
-    {
+    public R getPublishCourseInfo(@PathVariable String id) {
         CoursePublishVo coursePublishInfo = eduCourseService.getPublishCourseInfo(id);
-        return R.ok().data("coursePublishInfo",coursePublishInfo);
+        return R.ok().data("coursePublishInfo", coursePublishInfo);
     }
 
     @PostMapping("publishCourse/{id}")
-    public R publishCourse(@PathVariable String id)
-    {
+    public R publishCourse(@PathVariable String id) {
         EduCourse finalCourse = new EduCourse();
         finalCourse.setId(id);
         finalCourse.setStatus("Normal");
@@ -102,8 +93,7 @@ public class EduCourseController {
     }
 
     @DeleteMapping("removeCourse/{courseId}")
-    public R removeCourse(@PathVariable String courseId)
-    {
+    public R removeCourse(@PathVariable String courseId) {
         //删除小节 删除章节 删除描述 删除课程 按顺序进行删除
         eduCourseService.removeCourse(courseId);
         return R.ok();

@@ -6,8 +6,7 @@ import lombok.Data;
 import java.math.BigDecimal;
 
 @Data
-public class CourseWebVo
-{
+public class CourseWebVo {
     private String id;
 
     @ApiModelProperty(value = "课程标题")
