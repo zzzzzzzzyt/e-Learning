@@ -33,7 +33,7 @@ public class TokenAuthenticationFilter extends BasicAuthenticationFilter {
     private TokenManager tokenManager;
     private RedisTemplate redisTemplate;
 
-    public TokenAuthenticationFilter(AuthenticationManager authManager, TokenManager tokenManager,RedisTemplate redisTemplate) {
+    public TokenAuthenticationFilter(AuthenticationManager authManager, TokenManager tokenManager, RedisTemplate redisTemplate) {
         super(authManager);
         this.tokenManager = tokenManager;
         this.redisTemplate = redisTemplate;
@@ -42,8 +42,8 @@ public class TokenAuthenticationFilter extends BasicAuthenticationFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest req, HttpServletResponse res, FilterChain chain)
             throws IOException, ServletException {
-        logger.info("================="+req.getRequestURI());
-        if(req.getRequestURI().indexOf("admin") == -1) {
+        logger.info("=================" + req.getRequestURI());
+        if (req.getRequestURI().indexOf("admin") == -1) {
             chain.doFilter(req, res);
             return;
         }
@@ -71,8 +71,8 @@ public class TokenAuthenticationFilter extends BasicAuthenticationFilter {
 
             List<String> permissionValueList = (List<String>) redisTemplate.opsForValue().get(userName);
             Collection<GrantedAuthority> authorities = new ArrayList<>();
-            for(String permissionValue : permissionValueList) {
-                if(StringUtils.isEmpty(permissionValue)) continue;
+            for (String permissionValue : permissionValueList) {
+                if (StringUtils.isEmpty(permissionValue)) continue;
                 SimpleGrantedAuthority authority = new SimpleGrantedAuthority(permissionValue);
                 authorities.add(authority);
             }

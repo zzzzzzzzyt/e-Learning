@@ -33,21 +33,21 @@ public class AuthGlobalFilter implements GlobalFilter, Ordered {
         ServerHttpRequest request = exchange.getRequest();
         String path = request.getURI().getPath();
         //谷粒学院api接口，校验用户必须登录
-        if(antPathMatcher.match("/api/**/auth/**", path)) {
+        if (antPathMatcher.match("/api/**/auth/**", path)) {
             List<String> tokenList = request.getHeaders().get("token");
-            if(null == tokenList) {
+            if (null == tokenList) {
                 ServerHttpResponse response = exchange.getResponse();
                 return out(response);
             } else {
 //                Boolean isCheck = JwtUtils.checkToken(tokenList.get(0));
 //                if(!isCheck) {
-                    ServerHttpResponse response = exchange.getResponse();
-                    return out(response);
+                ServerHttpResponse response = exchange.getResponse();
+                return out(response);
 //                }
             }
         }
         //内部服务接口，不允许外部访问
-        if(antPathMatcher.match("/**/inner/**", path)) {
+        if (antPathMatcher.match("/**/inner/**", path)) {
             ServerHttpResponse response = exchange.getResponse();
             return out(response);
         }

@@ -16,7 +16,7 @@ import java.util.List;
 
 /**
  * <p>
- *  前端控制器
+ * 前端控制器
  * </p>
  *
  * @author testjava
@@ -41,10 +41,10 @@ public class RoleController {
             Role role) {
         Page<Role> pageParam = new Page<>(page, limit);
         QueryWrapper<Role> wrapper = new QueryWrapper<>();
-        if(!StringUtils.isEmpty(role.getRoleName())) {
-            wrapper.like("role_name",role.getRoleName());
+        if (!StringUtils.isEmpty(role.getRoleName())) {
+            wrapper.like("role_name", role.getRoleName());
         }
-        roleService.page(pageParam,wrapper);
+        roleService.page(pageParam, wrapper);
         return R.ok().data("items", pageParam.getRecords()).data("total", pageParam.getTotal());
     }
 

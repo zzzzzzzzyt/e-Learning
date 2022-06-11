@@ -46,6 +46,7 @@ public class TokenWebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     /**
      * 配置设置
+     *
      * @param http
      * @throws Exception
      */
@@ -57,13 +58,14 @@ public class TokenWebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .anyRequest().authenticated()
                 .and().logout().logoutUrl("/admin/acl/index/logout")
-                .addLogoutHandler(new TokenLogoutHandler(tokenManager,redisTemplate)).and()
+                .addLogoutHandler(new TokenLogoutHandler(tokenManager, redisTemplate)).and()
                 .addFilter(new TokenLoginFilter(authenticationManager(), tokenManager, redisTemplate))
                 .addFilter(new TokenAuthenticationFilter(authenticationManager(), tokenManager, redisTemplate)).httpBasic();
     }
 
     /**
      * 密码处理
+     *
      * @param auth
      * @throws Exception
      */
@@ -74,6 +76,7 @@ public class TokenWebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     /**
      * 配置哪些请求不拦截
+     *
      * @param web
      * @throws Exception
      */
@@ -81,7 +84,7 @@ public class TokenWebSecurityConfig extends WebSecurityConfigurerAdapter {
     public void configure(WebSecurity web) throws Exception {
         web.ignoring().antMatchers("/api/**",
                 "/swagger-resources/**", "/webjars/**", "/v2/**", "/swagger-ui.html/**"
-               );
+        );
         //web.ignoring().antMatchers("/*/**");
     }
 }

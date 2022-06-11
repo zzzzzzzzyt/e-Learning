@@ -18,7 +18,7 @@ import java.util.Date;
 @Component
 public class TokenManager {
 
-    private long tokenExpiration = 24*60*60*1000;
+    private long tokenExpiration = 24 * 60 * 60 * 1000;
     private String tokenSignKey = "123456";
 
     public String createToken(String username) {
