@@ -57,18 +57,17 @@ public class EduSubjectServiceImpl extends ServiceImpl<EduSubjectMapper, EduSubj
         List<OneSubject> finalSubjectList = new ArrayList<>();
 
         //3 封装一级分类
-        for (int i = 0; i < oneSubjectList.size(); i++) {
+        for (EduSubject subject : oneSubjectList) {
             OneSubject oneSubject = new OneSubject();
-            EduSubject eduSubject = oneSubjectList.get(i);
             //利用beanUtils进行封装 将eduSubject 相同的属性赋值到oneSubject中去
-            BeanUtils.copyProperties(eduSubject, oneSubject);
+            BeanUtils.copyProperties(subject, oneSubject);
             finalSubjectList.add(oneSubject);
 
             List<TwoSubject> twoFinalSubjectList = new ArrayList<>();
-            for (int m = 0; m < twoSubjectList.size(); m++) {
-                if (twoSubjectList.get(m).getParentId().equals(oneSubject.getId())) {
+            for (EduSubject value : twoSubjectList) {
+                if (value.getParentId().equals(oneSubject.getId())) {
                     TwoSubject tSubject = new TwoSubject();
-                    BeanUtils.copyProperties(twoSubjectList.get(m), tSubject);
+                    BeanUtils.copyProperties(value, tSubject);
                     twoFinalSubjectList.add(tSubject);
                 }
             }

@@ -31,7 +31,6 @@ public class CrmBannerServiceImpl extends ServiceImpl<CrmBannerMapper, CrmBanner
         //last方法进行拼接 sql语句 用来现在获得限制数目
         wrapper.last("limit 2");
 
-        List<CrmBanner> bannerList = baseMapper.selectList(wrapper);
-        return bannerList;
+        return baseMapper.selectList(wrapper);
     }
 }

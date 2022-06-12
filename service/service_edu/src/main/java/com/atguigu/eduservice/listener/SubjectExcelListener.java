@@ -51,19 +51,18 @@ public class SubjectExcelListener extends AnalysisEventListener<SubjectData> {
         QueryWrapper<EduSubject> wrapper = new QueryWrapper<>();
         wrapper.eq("title", name);
         wrapper.eq("parent_id", "0");
-        EduSubject eduSubject = subjectService.getOne(wrapper);
-        return eduSubject;
+        return subjectService.getOne(wrapper);
     }
 
     public EduSubject existTwoSubject(EduSubjectService subjectService, String name, String pid) {
         QueryWrapper<EduSubject> wrapper = new QueryWrapper<>();
         wrapper.eq("title", name);
         wrapper.eq("parent_id", pid);
-        EduSubject eduSubject = subjectService.getOne(wrapper);
-        return eduSubject;
+        return subjectService.getOne(wrapper);
     }
 
     @Override
     public void doAfterAllAnalysed(AnalysisContext analysisContext) {
+        // TODO document why this method is empty
     }
 }

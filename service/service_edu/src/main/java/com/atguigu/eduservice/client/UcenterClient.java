@@ -10,5 +10,5 @@ import org.springframework.web.bind.annotation.PathVariable;
 @FeignClient(name = "service-ucenter", fallback = UcenterClientImpl.class)
 public interface UcenterClient {
     @GetMapping("/educenter/member/getInfoUc/{id}")
-    public UcenterMember getInfo(@PathVariable String id);
+    UcenterMember getInfo(@PathVariable String id);
 }

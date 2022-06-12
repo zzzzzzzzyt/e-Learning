@@ -42,7 +42,7 @@ public class EduVideoServiceImpl extends ServiceImpl<EduVideoMapper, EduVideo> i
                 videoId.add(eduVideo.getVideoSourceId());
         }
 
-        if (videoId.size() > 0) {
+        if (!videoId.isEmpty()) {
             vodClient.deleteBatch(videoId);
         }
 

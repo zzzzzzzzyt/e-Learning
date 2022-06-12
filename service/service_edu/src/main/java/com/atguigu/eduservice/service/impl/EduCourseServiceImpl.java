@@ -96,8 +96,7 @@ public class EduCourseServiceImpl extends ServiceImpl<EduCourseMapper, EduCourse
 
     @Override
     public CoursePublishVo getPublishCourseInfo(String id) {
-        CoursePublishVo coursePublishInfo = baseMapper.getCoursePublishInfo(id);
-        return coursePublishInfo;
+        return baseMapper.getCoursePublishInfo(id);
     }
 
     @Override
@@ -123,8 +122,7 @@ public class EduCourseServiceImpl extends ServiceImpl<EduCourseMapper, EduCourse
         QueryWrapper<EduCourse> queryWrapper = new QueryWrapper<>();
         queryWrapper.orderByDesc("id");
         queryWrapper.last("limit 8");
-        List<EduCourse> eduCourses = baseMapper.selectList(queryWrapper);
-        return eduCourses;
+        return baseMapper.selectList(queryWrapper);
     }
 
 
@@ -162,7 +160,7 @@ public class EduCourseServiceImpl extends ServiceImpl<EduCourseMapper, EduCourse
         boolean hasNext = eduCoursePage.hasNext();
         boolean hasPrevious = eduCoursePage.hasPrevious();
 
-        Map<String, Object> map = new HashMap<String, Object>();
+        Map<String, Object> map = new HashMap<>();
         map.put("items", records);
         map.put("current", current);
         map.put("pages", pages);

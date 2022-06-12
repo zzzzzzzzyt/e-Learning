@@ -13,8 +13,8 @@ import java.util.List;
 @Component
 public interface VodClient {
     @DeleteMapping("eduvod/video/removeAlyVideo/{id}")
-    public R removeAlyVideo(@PathVariable("id") String id);
+    R removeAlyVideo(@PathVariable("id") String id);
 
     @DeleteMapping("eduvod/video/delete-batch")
-    public R deleteBatch(@RequestParam("videoIdList") List<String> videoIdList);
+    R deleteBatch(@RequestParam("videoIdList") List<String> videoIdList);
 }

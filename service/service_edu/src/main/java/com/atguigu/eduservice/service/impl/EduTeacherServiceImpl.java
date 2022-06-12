@@ -51,7 +51,7 @@ public class EduTeacherServiceImpl extends ServiceImpl<EduTeacherMapper, EduTeac
         boolean hasNext = pageTeacher.hasNext();
         boolean hasPrevious = pageTeacher.hasPrevious();
 
-        Map<String, Object> map = new HashMap<String, Object>();
+        Map<String, Object> map = new HashMap<>();
         map.put("items", records);
         map.put("current", current);
         map.put("pages", pages);
