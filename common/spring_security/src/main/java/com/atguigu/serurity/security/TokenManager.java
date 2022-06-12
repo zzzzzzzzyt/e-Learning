@@ -18,19 +18,17 @@ import java.util.Date;
 @Component
 public class TokenManager {
 
-    private long tokenExpiration = 24 * 60 * 60 * 1000;
-    private String tokenSignKey = "123456";
+    private final String tokenSignKey = "123456";
 
     public String createToken(String username) {
-        String token = Jwts.builder().setSubject(username)
+        long tokenExpiration = 24 * 60 * 60 * 1000;
+        return Jwts.builder().setSubject(username)
                 .setExpiration(new Date(System.currentTimeMillis() + tokenExpiration))
                 .signWith(SignatureAlgorithm.HS512, tokenSignKey).compressWith(CompressionCodecs.GZIP).compact();
-        return token;
     }
 
     public String getUserFromToken(String token) {
-        String user = Jwts.parser().setSigningKey(tokenSignKey).parseClaimsJws(token).getBody().getSubject();
-        return user;
+        return Jwts.parser().setSigningKey(tokenSignKey).parseClaimsJws(token).getBody().getSubject();
     }
 
     public void removeToken(String token) {

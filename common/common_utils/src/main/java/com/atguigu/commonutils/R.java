@@ -9,12 +9,12 @@ public class R {
     private boolean success;
     private Integer code;
     private String message;
-    private HashMap<String, Object> data = new HashMap<String, Object>();
+    private HashMap<String, Object> data = new HashMap<>();
 
     private R() {
     }
 
-    ;
+
 
     public static R ok() {
         R r = new R();
