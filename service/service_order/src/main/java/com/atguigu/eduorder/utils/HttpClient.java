@@ -69,31 +69,27 @@ public class HttpClient {
 
     public void addParameter(String key, String value) {
         if (param == null)
-            param = new HashMap<String, String>();
+            param = new HashMap<>();
         param.put(key, value);
     }
 
-    public void post() throws ClientProtocolException, IOException {
+    public void post() throws IOException {
         HttpPost http = new HttpPost(url);
         setEntity(http);
         execute(http);
     }
 
-    public void put() throws ClientProtocolException, IOException {
+    public void put() throws IOException {
         HttpPut http = new HttpPut(url);
         setEntity(http);
         execute(http);
     }
 
-    public void get() throws ClientProtocolException, IOException {
+    public void get() throws IOException {
         if (param != null) {
             StringBuilder url = new StringBuilder(this.url);
-            boolean isFirst = true;
             for (String key : param.keySet()) {
-                if (isFirst)
-                    url.append("?");
-                else
-                    url.append("&");
+                url.append("?");
                 url.append(key).append("=").append(param.get(key));
             }
             this.url = url.toString();
@@ -107,7 +103,7 @@ public class HttpClient {
      */
     private void setEntity(HttpEntityEnclosingRequestBase http) {
         if (param != null) {
-            List<NameValuePair> nvps = new LinkedList<NameValuePair>();
+            List<NameValuePair> nvps = new LinkedList<>();
             for (String key : param.keySet())
                 nvps.add(new BasicNameValuePair(key, param.get(key))); // 参数
             http.setEntity(new UrlEncodedFormEntity(nvps, Consts.UTF_8)); // 设置参数
@@ -117,20 +113,13 @@ public class HttpClient {
         }
     }
 
-    private void execute(HttpUriRequest http) throws ClientProtocolException,
-            IOException {
+    private void execute(HttpUriRequest http) throws IOException {
         CloseableHttpClient httpClient = null;
         try {
             if (isHttps) {
+                // 信任所有
                 SSLContext sslContext = new SSLContextBuilder()
-                        .loadTrustMaterial(null, new TrustStrategy() {
-                            // 信任所有
-                            public boolean isTrusted(X509Certificate[] chain,
-                                                     String authType)
-                                    throws CertificateException {
-                                return true;
-                            }
-                        }).build();
+                        .loadTrustMaterial(null, (chain, authType) -> true).build();
                 SSLConnectionSocketFactory sslsf = new SSLConnectionSocketFactory(
                         sslContext);
                 httpClient = HttpClients.custom().setSSLSocketFactory(sslsf)
