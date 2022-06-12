@@ -76,8 +76,7 @@ public class PermissionServiceImpl extends ServiceImpl<PermissionMapper, Permiss
         }
 
 
-        List<Permission> permissionList = bulid(allPermissionList);
-        return permissionList;
+        return bulid(allPermissionList);
     }
 
     //给角色分配权限
@@ -134,8 +133,7 @@ public class PermissionServiceImpl extends ServiceImpl<PermissionMapper, Permiss
         }
 
         List<Permission> permissionList = PermissionHelper.bulid(selectPermissionList);
-        List<JSONObject> result = MemuHelper.bulid(permissionList);
-        return result;
+        return MemuHelper.bulid(permissionList);
     }
 
     /**
@@ -217,8 +215,7 @@ public class PermissionServiceImpl extends ServiceImpl<PermissionMapper, Permiss
         wrapper.orderByDesc("id");
         List<Permission> permissionList = baseMapper.selectList(wrapper);
         //2 把查询所有菜单list集合按照要求进行封装
-        List<Permission> resultList = bulidPermission(permissionList);
-        return resultList;
+        return bulidPermission(permissionList);
     }
 
     //把返回所有菜单list集合进行封装的方法
@@ -241,7 +238,7 @@ public class PermissionServiceImpl extends ServiceImpl<PermissionMapper, Permiss
 
     private static Permission selectChildren(Permission permissionNode, List<Permission> permissionList) {
         //1 因为向一层菜单里面放二层菜单，二层里面还要放三层，把对象初始化
-        permissionNode.setChildren(new ArrayList<Permission>());
+        permissionNode.setChildren(new ArrayList<>());
 
         //2 遍历所有菜单list集合，进行判断比较，比较id和pid值是否相同
         for (Permission it : permissionList) {
@@ -252,7 +249,7 @@ public class PermissionServiceImpl extends ServiceImpl<PermissionMapper, Permiss
                 it.setLevel(level);
                 //如果children为空，进行初始化操作
                 if (permissionNode.getChildren() == null) {
-                    permissionNode.setChildren(new ArrayList<Permission>());
+                    permissionNode.setChildren(new ArrayList<>());
                 }
                 //把查询出来的子菜单放到父菜单里面
                 permissionNode.getChildren().add(selectChildren(it, permissionList));
@@ -281,7 +278,7 @@ public class PermissionServiceImpl extends ServiceImpl<PermissionMapper, Permiss
         wrapper.select("id");
         List<Permission> childIdList = baseMapper.selectList(wrapper);
         //把childIdList里面菜单id值获取出来，封装idList里面，做递归查询
-        childIdList.stream().forEach(item -> {
+        childIdList.forEach(item -> {
             //封装idList里面
             idList.add(item.getId());
             //递归查询

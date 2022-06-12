@@ -41,10 +41,10 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements Ro
         //根据用户id，查询用户拥有的角色id
         List<UserRole> existUserRoleList = userRoleService.list(new QueryWrapper<UserRole>().eq("user_id", userId).select("role_id"));
 
-        List<String> existRoleList = existUserRoleList.stream().map(c -> c.getRoleId()).collect(Collectors.toList());
+        List<String> existRoleList = existUserRoleList.stream().map(UserRole::getRoleId).collect(Collectors.toList());
 
         //对角色进行分类
-        List<Role> assignRoles = new ArrayList<Role>();
+        List<Role> assignRoles = new ArrayList<>();
         for (Role role : allRolesList) {
             //已分配
             if (existRoleList.contains(role.getId())) {
@@ -79,9 +79,9 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements Ro
     public List<Role> selectRoleByUserId(String id) {
         //根据用户id拥有的角色id
         List<UserRole> userRoleList = userRoleService.list(new QueryWrapper<UserRole>().eq("user_id", id).select("role_id"));
-        List<String> roleIdList = userRoleList.stream().map(item -> item.getRoleId()).collect(Collectors.toList());
+        List<String> roleIdList = userRoleList.stream().map(UserRole::getRoleId).collect(Collectors.toList());
         List<Role> roleList = new ArrayList<>();
-        if (roleIdList.size() > 0) {
+        if (!roleIdList.isEmpty()) {
             roleList = baseMapper.selectBatchIds(roleIdList);
         }
         return roleList;
