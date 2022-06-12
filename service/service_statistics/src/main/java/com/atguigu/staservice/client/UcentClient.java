@@ -11,5 +11,5 @@ import org.springframework.web.bind.annotation.PathVariable;
 public interface UcentClient {
     //查询某一天的注册人数
     @GetMapping("/educenter/member/countRegister/{day}")
-    public R countRegister(@PathVariable("day") String day);
+    R countRegister(@PathVariable("day") String day);
 }

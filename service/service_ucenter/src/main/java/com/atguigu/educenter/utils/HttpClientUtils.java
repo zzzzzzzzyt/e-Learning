@@ -52,21 +52,20 @@ public class HttpClientUtils {
         client = HttpClients.custom().setConnectionManager(cm).build();
     }
 
-    public static String postParameters(String url, String parameterStr) throws ConnectTimeoutException, SocketTimeoutException, Exception {
+    public static String postParameters(String url, String parameterStr) throws Exception {
         return post(url, parameterStr, "application/x-www-form-urlencoded", charset, connTimeout, readTimeout);
     }
 
-    public static String postParameters(String url, String parameterStr, String charset, Integer connTimeout, Integer readTimeout) throws ConnectTimeoutException, SocketTimeoutException, Exception {
+    public static String postParameters(String url, String parameterStr, String charset, Integer connTimeout, Integer readTimeout) throws Exception {
         return post(url, parameterStr, "application/x-www-form-urlencoded", charset, connTimeout, readTimeout);
     }
 
-    public static String postParameters(String url, Map<String, String> params) throws ConnectTimeoutException,
-            SocketTimeoutException, Exception {
+    public static String postParameters(String url, Map<String, String> params) throws Exception {
         return postForm(url, params, null, connTimeout, readTimeout);
     }
 
-    public static String postParameters(String url, Map<String, String> params, Integer connTimeout, Integer readTimeout) throws ConnectTimeoutException,
-            SocketTimeoutException, Exception {
+    public static String postParameters(String url, Map<String, String> params, Integer connTimeout, Integer readTimeout) throws
+            Exception {
         return postForm(url, params, null, connTimeout, readTimeout);
     }
 
@@ -125,7 +124,7 @@ public class HttpClientUtils {
             result = IOUtils.toString(res.getEntity().getContent(), charset);
         } finally {
             post.releaseConnection();
-            if (url.startsWith("https") && client != null && client instanceof CloseableHttpClient) {
+            if (url.startsWith("https") && client instanceof CloseableHttpClient) {
                 ((CloseableHttpClient) client).close();
             }
         }

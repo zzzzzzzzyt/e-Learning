@@ -22,6 +22,7 @@ public class VodServiceImpl implements VodService {
     public String uploadAlyVideo(MultipartFile file) {
         try {
             String fileName = file.getOriginalFilename();
+            assert fileName != null;
             String title = fileName.substring(0, fileName.lastIndexOf("."));
             InputStream inputStream = file.getInputStream();
 
@@ -31,11 +32,7 @@ public class VodServiceImpl implements VodService {
             UploadVideoImpl uploader = new UploadVideoImpl();
             UploadStreamResponse response = uploader.uploadStream(request);
             String res = null;
-            if (response.isSuccess()) {
-                res = response.getVideoId();
-            } else { //如果设置回调URL无效，不影响视频上传，可以返回VideoId同时会返回错误码。其他情况上传失败时，VideoId为空，此时需要根据返回错误码分析具体错误原因
-                res = response.getVideoId();
-            }
+            res = response.getVideoId();
             return res;
         } catch (Exception e) {
             e.printStackTrace();

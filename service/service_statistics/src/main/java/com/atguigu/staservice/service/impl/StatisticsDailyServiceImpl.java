@@ -43,9 +43,9 @@ public class StatisticsDailyServiceImpl extends ServiceImpl<StatisticsDailyMappe
         R registerR = ucentClient.countRegister(day);
         Integer registerNum = (Integer) registerR.getData().get("count");
         System.out.println(registerNum);
-        Integer loginNum = RandomUtils.nextInt(100, 200);//TODO
-        Integer videoViewNum = RandomUtils.nextInt(100, 200);//TODO
-        Integer courseNum = RandomUtils.nextInt(100, 200);//TODO
+        Integer loginNum = RandomUtils.nextInt(100, 200);
+        Integer videoViewNum = RandomUtils.nextInt(100, 200);
+        Integer courseNum = RandomUtils.nextInt(100, 200);
 
         //创建统计对象 将信息封存进去 然后加入数据库  把获取对象添加进数据库 表中
         StatisticsDaily daily = new StatisticsDaily();

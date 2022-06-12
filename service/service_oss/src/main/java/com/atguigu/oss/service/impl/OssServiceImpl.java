@@ -41,7 +41,6 @@ public class OssServiceImpl implements OssService {
         // 关闭OSSClient。
         ossClient.shutdown();
 
-        String url = "http://" + bucketName + "." + endpoint + "/" + fileName;
-        return url;
+        return "http://" + bucketName + "." + endpoint + "/" + fileName;
     }
 }

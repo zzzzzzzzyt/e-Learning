@@ -14,6 +14,8 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+import java.util.Objects;
+
 /**
  * <p>
  * 会员表 服务实现类
@@ -53,19 +55,17 @@ public class UcenterMemberServiceImpl extends ServiceImpl<UcenterMemberMapper, U
         }
 
         //判断密码是否正确  但是注意 数据库中的密码 不会明面上展示 会采取md5的方式进行加密
-        if (!MD5.encrypt(password).equals(member.getPassword())) {
+        if (!Objects.equals(MD5.encrypt(password), member.getPassword())) {
             throw new GuliException(20001, "登录失败");
         }
 
-        if (member.getIsDisabled()) {
+        if (Boolean.TRUE.equals(member.getIsDisabled())) {
             throw new GuliException(20001, "登录失败");
         }
 
         //如果都不是的话 那代表注册成功 接下来要我们已 token传递 然后我们选择用jwt规则
 
-        String jwtToken = JwtUtils.getJwtToken(member.getId(), member.getNickname());
-
-        return jwtToken;
+        return JwtUtils.getJwtToken(member.getId(), member.getNickname());
 
     }
 
