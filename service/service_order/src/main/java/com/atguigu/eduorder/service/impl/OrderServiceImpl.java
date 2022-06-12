@@ -28,11 +28,10 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, Order> implements
     @Autowired
     private EduClient eduClient;
     @Autowired
-    private UcenterClient ucenterClient ;
+    private UcenterClient ucenterClient;
 
     @Override
-    public String saveOrder(String id, String memberId)
-    {
+    public String saveOrder(String id, String memberId) {
         //我们需要课程信息和成员信息
         CourseOrderVo courseInfoOrder = eduClient.getCourseInfoOrder(id);
         UcenterMemberVo memberInfoOrder = ucenterClient.getMemberInfoOrder(memberId);

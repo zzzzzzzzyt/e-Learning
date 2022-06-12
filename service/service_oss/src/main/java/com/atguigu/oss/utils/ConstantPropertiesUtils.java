@@ -5,8 +5,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 @Component
-public class ConstantPropertiesUtils implements InitializingBean
-{
+public class ConstantPropertiesUtils implements InitializingBean {
     @Value("${aliyun.oss.file.endpoint}")
     private String endPoint;
 
@@ -25,8 +24,7 @@ public class ConstantPropertiesUtils implements InitializingBean
     public static String BUCKET_NAME;
 
     @Override
-    public void afterPropertiesSet() throws Exception
-    {
+    public void afterPropertiesSet() throws Exception {
         END_POINT = endPoint;
         ACCESS_KEY_ID = keyId;
         ACCESS_KEY_SECRET = keySecret;

@@ -34,16 +34,13 @@ public class PayLogServiceImpl extends ServiceImpl<PayLogMapper, PayLog> impleme
     private OrderService orderService;
 
 
-
     //生成微信支付二维码接口
     @Override
-    public Map createNative(String orderNo)
-    {
-        try
-        {
+    public Map createNative(String orderNo) {
+        try {
             //1 根据订单号查询订单
             QueryWrapper<Order> wrapper = new QueryWrapper<>();
-            wrapper.eq("order_no",orderNo);
+            wrapper.eq("order_no", orderNo);
             Order order = orderService.getOne(wrapper);
             Map m = new HashMap();
             //2 使用map设置生成二维码需要参数
@@ -52,20 +49,20 @@ public class PayLogServiceImpl extends ServiceImpl<PayLogMapper, PayLog> impleme
             m.put("nonce_str", WXPayUtil.generateNonceStr());
             m.put("body", order.getCourseTitle());
             m.put("out_trade_no", orderNo);
-            m.put("total_fee", order.getTotalFee().multiply(new BigDecimal("100")).longValue()+"");
+            m.put("total_fee", order.getTotalFee().multiply(new BigDecimal("100")).longValue() + "");
             m.put("spbill_create_ip", "127.0.0.1");
             m.put("notify_url", "http://guli.shop/api/order/weixinPay/weixinNotify\n");
             m.put("trade_type", "NATIVE");
             //3 发送httpclient请求，传递参数xml格式,微信支付提供固定的地址
             HttpClient client = new HttpClient("https://api.mch.weixin.qq.com/pay/unifiedorder");
             //client设置参数
-            client.setXmlParam(WXPayUtil.generateSignedXml(m,"T6m9iK73b0kn9g5v426MKfHQH7X8rKwb"));
+            client.setXmlParam(WXPayUtil.generateSignedXml(m, "T6m9iK73b0kn9g5v426MKfHQH7X8rKwb"));
             client.setHttps(true);
             client.post();
 
             //返回第三方数据  //返回的是xml格式的数据 所以要进行转换
             String xml = client.getContent();
-            Map<String,String> resultMap = WXPayUtil.xmlToMap(xml);
+            Map<String, String> resultMap = WXPayUtil.xmlToMap(xml);
 
             //4 得到发送请求返回结果
             Map map = new HashMap();
@@ -77,17 +74,16 @@ public class PayLogServiceImpl extends ServiceImpl<PayLogMapper, PayLog> impleme
 
             return map;
 
-        }catch (Exception e){
-            throw new GuliException(20001,e.getMessage());
+        } catch (Exception e) {
+            throw new GuliException(20001, e.getMessage());
         }
 
     }
 
     //查询订单的状态
     @Override
-    public Map<String, String> queryPayStatus(String orderNo)
-    {
-        try{
+    public Map<String, String> queryPayStatus(String orderNo) {
+        try {
             //1、封装参数
             Map m = new HashMap<>();
             m.put("appid", "wx74862e0dfcf69954");
@@ -106,7 +102,7 @@ public class PayLogServiceImpl extends ServiceImpl<PayLogMapper, PayLog> impleme
             //6、转成Map
             //7、返回
             return resultMap;
-        }catch (Exception e){
+        } catch (Exception e) {
             return null;
         }
     }
@@ -114,16 +110,17 @@ public class PayLogServiceImpl extends ServiceImpl<PayLogMapper, PayLog> impleme
 
     //修改订单的状态  添加支付成功记录
     @Override
-    public void updateOrderStatus(Map<String, String> map)
-    {
+    public void updateOrderStatus(Map<String, String> map) {
         //根据map中的字段查出订单号
         String orderNO = map.get("out_trade_no");
         //查出课程信息
         QueryWrapper<Order> wrapper = new QueryWrapper<>();
-        wrapper.eq("order_no",orderNO);
+        wrapper.eq("order_no", orderNO);
         Order order = orderService.getOne(wrapper);
         //如果等于1 直接返回就行了
-        if (order.getStatus()==1){return;}
+        if (order.getStatus() == 1) {
+            return;
+        }
         //不然的话 就是修改状态
         order.setStatus(1);
         orderService.updateById(order);

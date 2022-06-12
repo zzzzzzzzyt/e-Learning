@@ -10,10 +10,8 @@ import org.springframework.context.annotation.ComponentScan;
 @EnableDiscoveryClient
 @ComponentScan({"com.atguigu"})
 @MapperScan("com.atguigu.educenter.mapper")  //mapperscan没写好
-public class UcenterApplication
-{
-    public static void main(String[] args)
-    {
-        SpringApplication.run(UcenterApplication.class,args);
+public class UcenterApplication {
+    public static void main(String[] args) {
+        SpringApplication.run(UcenterApplication.class, args);
     }
 }

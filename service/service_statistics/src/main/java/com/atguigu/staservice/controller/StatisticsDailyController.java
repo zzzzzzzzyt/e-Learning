@@ -27,8 +27,7 @@ public class StatisticsDailyController {
 
     //查询某天注册人数  然后在数据库中添加
     @PostMapping("registerCount/{day}")
-    public R registerCount(@PathVariable("day")String day)
-    {
+    public R registerCount(@PathVariable("day") String day) {
         statisticsDailyService.registerCount(day);
         return R.ok();
     }
@@ -36,10 +35,9 @@ public class StatisticsDailyController {
 
     //图标显示，返回两部分数据，日期json数组，数量json数组
     @GetMapping("getShowData/{type}/{begin}/{end}")
-    public R getShowData(@PathVariable("type")String type,@PathVariable("begin")String begin,
-                         @PathVariable("end")String end)
-    {
-        Map<String,Object> map = statisticsDailyService.getShowData(type,begin,end);
+    public R getShowData(@PathVariable("type") String type, @PathVariable("begin") String begin,
+                         @PathVariable("end") String end) {
+        Map<String, Object> map = statisticsDailyService.getShowData(type, begin, end);
         return R.ok().data((HashMap<String, Object>) map);
     }
 }

@@ -4,8 +4,7 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 @Data
-public class RegisterVo
-{
+public class RegisterVo {
     @ApiModelProperty(value = "昵称")
     private String nickname;
 

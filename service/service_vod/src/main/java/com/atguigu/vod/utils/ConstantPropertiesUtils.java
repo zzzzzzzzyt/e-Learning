@@ -5,8 +5,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 @Component
-public class ConstantPropertiesUtils implements InitializingBean
-{
+public class ConstantPropertiesUtils implements InitializingBean {
 
     @Value("${aliyun.vod.file.keyid}")
     private String keyId;
@@ -15,13 +14,11 @@ public class ConstantPropertiesUtils implements InitializingBean
     private String keySecret;
 
 
-
     public static String ACCESS_KEY_ID;
     public static String ACCESS_KEY_SECRET;
 
     @Override
-    public void afterPropertiesSet() throws Exception
-    {
+    public void afterPropertiesSet() {
         ACCESS_KEY_ID = keyId;
         ACCESS_KEY_SECRET = keySecret;
     }

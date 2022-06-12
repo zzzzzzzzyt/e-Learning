@@ -5,8 +5,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 @Component
-public class ConstantWxUtils implements InitializingBean
-{
+public class ConstantWxUtils implements InitializingBean {
     @Value("${wx.open.app_id}")
     private String appId;
 
@@ -21,8 +20,7 @@ public class ConstantWxUtils implements InitializingBean
     public static String WX_OPEN_REDIRECT_URL;
 
     @Override
-    public void afterPropertiesSet() throws Exception
-    {
+    public void afterPropertiesSet() {
         WX_OPEN_APP_ID = appId;
         WX_OPEN_APP_SECRET = appSecret;
         WX_OPEN_REDIRECT_URL = redirectUrl;

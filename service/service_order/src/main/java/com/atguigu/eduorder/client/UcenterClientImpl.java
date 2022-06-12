@@ -4,11 +4,9 @@ import com.atguigu.commonvo.UcenterMemberVo;
 import org.springframework.stereotype.Component;
 
 @Component
-public class UcenterClientImpl implements UcenterClient
-{
+public class UcenterClientImpl implements UcenterClient {
     @Override
-    public UcenterMemberVo getMemberInfoOrder(String id)
-    {
+    public UcenterMemberVo getMemberInfoOrder(String id) {
         return null;
     }
 }

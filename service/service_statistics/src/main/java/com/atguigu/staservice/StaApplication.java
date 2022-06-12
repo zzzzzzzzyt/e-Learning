@@ -14,10 +14,8 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @EnableDiscoveryClient
 @EnableFeignClients
 @EnableScheduling //定时任务  进行对数据的查询
-public class StaApplication
-{
-    public static void main(String[] args)
-    {
-        SpringApplication.run(StaApplication.class,args);
+public class StaApplication {
+    public static void main(String[] args) {
+        SpringApplication.run(StaApplication.class, args);
     }
 }

@@ -12,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.net.URLEncoder;
 import java.util.HashMap;
@@ -20,16 +19,14 @@ import java.util.HashMap;
 @CrossOrigin
 @Controller
 //@RequestMapping("/api/ucenter/wx")
-public class WxApiController
-{
+public class WxApiController {
 
     @Autowired
     private UcenterMemberService memberService;
 
     //获取扫码人信息 添加数据
     @GetMapping("callback")
-    public String callback(String code,String state)
-    {
+    public String callback(String code, String state) {
         //1 获取code值，临时票据，类似于验证码
         //向认证服务器发送请求交换access_token
         String baseAccessTokenUrl = "https://api.weixin.qq.com/sns/oauth2/access_token" +
@@ -38,10 +35,9 @@ public class WxApiController
                 "&code=%s" +
                 "&grant_type=authorization_code";
 
-        String accessTokenUrl = String.format(baseAccessTokenUrl,ConstantWxUtils.WX_OPEN_APP_ID,ConstantWxUtils.WX_OPEN_APP_SECRET,code);
+        String accessTokenUrl = String.format(baseAccessTokenUrl, ConstantWxUtils.WX_OPEN_APP_ID, ConstantWxUtils.WX_OPEN_APP_SECRET, code);
         String result = null;
-        try
-        {
+        try {
             result = HttpClientUtils.get(accessTokenUrl);
 
             //解析json字符串
@@ -54,7 +50,7 @@ public class WxApiController
 
             //用户的信息是肯定能获取到的但是不知道是不是存在用户
             UcenterMember member = memberService.getOpenIdMember(openid);
-            if (member==null)  //如果用户不存在 再进行接下来的步骤 不然不用浪费时间了额
+            if (member == null)  //如果用户不存在 再进行接下来的步骤 不然不用浪费时间了额
             {
                 //3 拿着accesstoken 和 openid 再去请求微信提供的固定地址 获得扫码人的信息
                 String baseUserInfoUrl = "https://api.weixin.qq.com/sns/userinfo" +
@@ -71,7 +67,7 @@ public class WxApiController
                 //先转换数据
                 HashMap userInfoMap = gson.fromJson(userInfo, HashMap.class);
                 String nickname = (String) userInfoMap.get("nickname"); //昵称
-                System.out.println("+++++++++++++++++++++++++++++++"+nickname);//打印一下昵称
+                System.out.println("+++++++++++++++++++++++++++++++" + nickname);//打印一下昵称
                 String headimgurl = (String) userInfoMap.get("headimgurl");  //头像
                 member = new UcenterMember();
                 member.setAvatar(headimgurl);
@@ -84,35 +80,30 @@ public class WxApiController
             //用token传递信息
             String jwtToken = JwtUtils.getJwtToken(member.getId(), member.getNickname());
 
-            return "redirect:http://localhost:3000?token="+jwtToken;
+            return "redirect:http://localhost:3000?token=" + jwtToken;
 
-        }catch (Exception e)
-        {
-            throw new GuliException(20001,e.getMessage());
+        } catch (Exception e) {
+            throw new GuliException(20001, e.getMessage());
         }
-
-
 
 
     }
 
     @GetMapping("login")
-    public String getWxCode()
-    {
+    public String getWxCode() {
         String codeUrl = "https://open.weixin.qq.com/connect/qrconnect" +
-                "?appid=%s"+
-                "&redirect_uri=%s"+
-                "&response_type=code"+
-                "&scope=snsapi_login"+
-                "&state=%s"+
+                "?appid=%s" +
+                "&redirect_uri=%s" +
+                "&response_type=code" +
+                "&scope=snsapi_login" +
+                "&state=%s" +
                 "#wechat_redirect";
         //回调地址 要编码
         String redirectUri = ConstantWxUtils.WX_OPEN_REDIRECT_URL;
-        try
-        {
-            redirectUri = URLEncoder.encode(redirectUri,"UTF-8");
-        }catch (Exception e){
-            throw new GuliException(20001,e.getMessage());
+        try {
+            redirectUri = URLEncoder.encode(redirectUri, "UTF-8");
+        } catch (Exception e) {
+            throw new GuliException(20001, e.getMessage());
         }
 
         //设置%s里面的值
@@ -123,6 +114,6 @@ public class WxApiController
                 "atguigu"
         );
 
-        return "redirect:"+url;
+        return "redirect:" + url;
     }
 }

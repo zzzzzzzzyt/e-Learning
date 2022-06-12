@@ -1,15 +1,8 @@
 package com.atguigu.staservice.utils;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import java.text.DateFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
 
 /**
  * 日期操作工具类
@@ -40,9 +33,9 @@ public class DateUtil {
      * @param amount 要加的天数，可能为负数
      */
     public static Date addDays(Date date, int amount) {
-        Calendar now =Calendar.getInstance();
+        Calendar now = Calendar.getInstance();
         now.setTime(date);
-        now.set(Calendar.DATE,now.get(Calendar.DATE)+amount);
+        now.set(Calendar.DATE, now.get(Calendar.DATE) + amount);
         return now.getTime();
     }
 

@@ -12,10 +12,8 @@ import org.springframework.context.annotation.ComponentScan;
 @ComponentScan(basePackages = {"com.atguigu"})
 @MapperScan("com.atguigu.eduorder.mapper")  //因为要用到mapper 所以需要扫描
 @EnableDiscoveryClient //要用到nacos 所以必须要填
-public class OrderApplication
-{
-    public static void main(String[] args)
-    {
-        SpringApplication.run(OrderApplication.class,args);
+public class OrderApplication {
+    public static void main(String[] args) {
+        SpringApplication.run(OrderApplication.class, args);
     }
 }
